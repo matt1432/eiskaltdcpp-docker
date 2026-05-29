@@ -39,7 +39,7 @@ RUN cd /tmp/eiskaltdcpp-master/builddir \
 # icecult + webserver
 RUN curl -L https://github.com/NikitaBeloglazov/icecult-reborn/archive/1b80d69e0446aa46df01980986f27c79cd34e281.tar.gz | tar xz -C /tmp
 RUN mv /tmp/icecult-reborn-1b80d69e0446aa46df01980986f27c79cd34e281 /tmp/icecult-master
-RUN curl -L https://caddyserver.com/download/linux/amd64?license=personal | tar xz -C /bin
+RUN curl -L https://github.com/caddyserver/caddy/releases/download/v2.11.3/caddy_2.11.3_linux_amd64.tar.gz | tar xz -C /bin caddy
 
 # forego - process manager
 RUN curl https://bin.equinox.io/c/ekMN3bCZFUn/forego-stable-linux-amd64.tgz | tar xz -C /bin
