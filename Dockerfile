@@ -41,8 +41,10 @@ RUN curl -L https://github.com/NikitaBeloglazov/icecult-reborn/archive/1b80d69e0
 RUN mv /tmp/icecult-reborn-1b80d69e0446aa46df01980986f27c79cd34e281 /tmp/icecult-master
 RUN curl -L https://github.com/caddyserver/caddy/releases/download/v2.11.3/caddy_2.11.3_linux_amd64.tar.gz | tar xz -C /bin caddy
 
+FROM golang:1.22 AS forego-builder
+
 # forego - process manager
-RUN curl https://bin.equinox.io/c/ekMN3bCZFUn/forego-stable-linux-amd64.tgz | tar xz -C /bin
+RUN GOPATH="/tmp" go install github.com/ddollar/forego@89fb456a167f59ace41e0e9294f4b7c01f76943e
 
 
 # -----------------------------------------------------------------------------
@@ -50,9 +52,9 @@ RUN curl https://bin.equinox.io/c/ekMN3bCZFUn/forego-stable-linux-amd64.tgz | ta
 # -----------------------------------------------------------------------------
 FROM debian:trixie-slim
 COPY --from=builder /tmp/eiskaltdcpp-master/builddir/eiskaltdcpp-daemon/eiskaltdcpp-daemon \
-                    /bin/forego \
                     /bin/caddy \
                     /bin/
+COPY --from=forego-builder /tmp/bin/forego /bin
 COPY --from=builder /tmp/icecult-master/app /opt/icecult
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
