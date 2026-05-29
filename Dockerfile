@@ -65,6 +65,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 ADD ./Procfile /
 ADD ./Caddyfile /
 
-EXPOSE 80/tcp 7000/udp
+EXPOSE 80/tcp
 
 CMD ["/bin/forego", "start"]
