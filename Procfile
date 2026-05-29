@@ -1,2 +1,2 @@
 app: /bin/eiskaltdcpp-daemon -c /opt/eiskalt
-web: /bin/caddy
+web: /bin/caddy run

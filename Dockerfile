@@ -60,7 +60,7 @@ COPY --from=builder /tmp/icecult-master/app /opt/icecult
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
     iproute2 \
-    libboost-system1.55.0
+    libboost-system1.88.0
 
 ADD ./Procfile /
 ADD ./Caddyfile /

@@ -1,7 +1,12 @@
 :80 {
-    browse
-    root /opt/icecult
-    proxy /rpc localhost:3121
-    gzip
-    log stdout
+	root * /opt/icecult
+	file_server browse
+
+	reverse_proxy /rpc/* localhost:3121
+
+	encode gzip
+
+	log {
+		output stdout
+	}
 }
