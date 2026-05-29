@@ -37,7 +37,8 @@ RUN cd /tmp/eiskaltdcpp-master/builddir \
  && make
 
 # icecult + webserver
-RUN curl -L https://github.com/kraiz/icecult/archive/master.tar.gz | tar xz -C /tmp
+RUN curl -L https://github.com/NikitaBeloglazov/icecult-reborn/archive/1b80d69e0446aa46df01980986f27c79cd34e281.tar.gz | tar xz -C /tmp
+RUN mv /tmp/icecult-reborn-1b80d69e0446aa46df01980986f27c79cd34e281 /tmp/icecult-master
 RUN curl -L https://caddyserver.com/download/linux/amd64?license=personal | tar xz -C /bin
 
 # forego - process manager
