@@ -1,4 +1,4 @@
-FROM debian:jessie-slim AS builder
+FROM debian:trixie-slim AS builder
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
@@ -9,25 +9,29 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libboost-system-dev \
     libbz2-dev \
     libssl-dev \
-    pkg-config
+    pkg-config \
+    zlib1g-dev
 
 # eiskaltdcpp
-RUN curl -L https://github.com/eiskaltdcpp/eiskaltdcpp/archive/master.tar.gz | tar xz -C /tmp
+RUN curl -L https://github.com/eiskaltdcpp/eiskaltdcpp/archive/697db4b03e3d9ffa48b3d4c74fd043dee7663266.tar.gz | tar xz -C /tmp
+RUN mv /tmp/eiskaltdcpp-697db4b03e3d9ffa48b3d4c74fd043dee7663266 /tmp/eiskaltdcpp-master
 RUN mkdir -p /tmp/eiskaltdcpp-master/builddir
 RUN cd /tmp/eiskaltdcpp-master/builddir \
  && cmake -DCMAKE_BUILD_TYPE=Release \
-          -DLUA_SCRIPT=OFF \
-          -DUSE_MINIUPNP=OFF \
-          -DPERL_REGEX=OFF \
-          -DNO_UI_DAEMON=ON \
-          -DJSONRPC_DAEMON=ON \
-          -DLOCAL_JSONCPP=ON \
           -DUSE_QT=OFF \
           -DUSE_QT5=OFF \
-          -DUSE_IDNA=OFF \
+          -DNO_UI_DAEMON=ON \
+          -DLUA_SCRIPT=OFF \
+          -DUSE_MINIUPNP=OFF \
           -DFREE_SPACE_BAR_C=OFF \
-          -DLINK=STATIC \
-          -Dlinguas="" \
+          -DWITH_EMOTICONS=OFF \
+          -DWITH_EXAMPLES=OFF \
+          -DWITH_LUASCRIPTS=OFF \
+          -DWITH_SOUNDS=OFF \
+          -DPERL_REGEX=OFF \
+          -DUSE_IDN2=OFF \
+          -DJSONRPC_DAEMON=ON \
+          -DBUILD_STATIC=ON \
           ..
 RUN cd /tmp/eiskaltdcpp-master/builddir \
  && make
@@ -43,7 +47,7 @@ RUN curl https://bin.equinox.io/c/ekMN3bCZFUn/forego-stable-linux-amd64.tgz | ta
 # -----------------------------------------------------------------------------
 # production image:
 # -----------------------------------------------------------------------------
-FROM debian:jessie-slim
+FROM debian:trixie-slim
 COPY --from=builder /tmp/eiskaltdcpp-master/builddir/eiskaltdcpp-daemon/eiskaltdcpp-daemon \
                     /bin/forego \
                     /bin/caddy \
