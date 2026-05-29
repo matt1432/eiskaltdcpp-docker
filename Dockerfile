@@ -62,6 +62,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     iproute2 \
     libboost-system1.88.0
 
+RUN mkdir -p /data /Downloads /Share \
+    # Set permission on default directories
+    && chmod a+rwX /data /Downloads /Share
+
 ADD ./Procfile /
 ADD ./Caddyfile /
 

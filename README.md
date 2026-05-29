@@ -6,9 +6,9 @@ Docker image for [eiskaltdcpp client](https://github.com/eiskaltdcpp/eiskaltdcpp
 
 ```
 docker run --rm
- -v /path/to/eiskalt:/opt/eiskalt
- -v /path/to/downloads:/opt/downloads
- -v /path/to/share1:/opt/share/share1
+ -v /path/to/data:/data
+ -v /path/to/downloads:/Downloads
+ -v /path/to/share1:/Share/share1
  -p 8008:80
    kraiz/icecold
 ```
@@ -17,19 +17,19 @@ docker run --rm
 * `80` is the webinterface for you to open in browser
 
 # volumes
-* `/opt/eiskalt/`, config and temp data folder. Add 2 files manually before starting:
+* `/data/`, config and temp data folder. Add 2 files manually before starting:
   * `DCPlusPlus.xml`:
   ```
   <?xml version="1.0" encoding="utf-8" standalone="yes"?>
   <DCPlusPlus>
     <Settings>
      <Nick type="string">MYNICK</Nick>
-     <DownloadDirectory type="string">/opt/downloads/</DownloadDirectory>
+     <DownloadDirectory type="string">/Downloads/</DownloadDirectory>
      <MaxDownloadSpeedMain type="int">0</MaxDownloadSpeedMain>
      <MaxUploadSpeedMain type="int">0</MaxUploadSpeedMain>
     </Settings>
     <Share>
-      <Directory Virtual="share">/opt/share/</Directory>
+      <Directory Virtual="share">/Share/</Directory>
     </Share>
   </DCPlusPlus>
 
@@ -46,5 +46,5 @@ docker run --rm
     <FavoriteDirs/>
   </Favorites>
   ```
-* `/opt/share/`, mount anything you want to share below this folder.
-* `/opt/downloads/`, a place where to store the files you downloaded. Should match directories of `DCPlusPlus.xml`.
+* `/Share/`, mount anything you want to share below this folder.
+* `/Downloads/`, a place where to store the files you downloaded. Should match directories of `DCPlusPlus.xml`.
